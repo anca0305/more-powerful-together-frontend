@@ -42,17 +42,17 @@ const Login = () => {
         <div>
             <nav className="navigation">
                 <div className="row">
-                    <div className="col-md-3">
+                    <div className="col-md-6">
                         <div className="scrollmenu">
                             <a href="#home">More Powerful Together</a>
                         </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
+                    </div>
+                    <div className="col-md-1">
                     </div>
                     <div className="col-md-3">
-                    </div>
-                    <div className="col-md-3">
-                        <p>Register</p>
+                        <a href="http://localhost:3000/register"><p>Register</p></a>
                     </div>
                 </div>
             </nav>
@@ -87,7 +87,7 @@ const Login = () => {
                         </div>
                         <div className="row container-login">
                             <div className="col-md-12">
-                                <p>Dont have account? Register</p>
+                                <p>Don't have account? <a href="http://localhost:3000/register">Register</a></p>
                             </div>
                         </div>
                     </div>

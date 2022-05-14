@@ -17,6 +17,7 @@ const Profile = () => {
     const [city, setCity] = useState("");
     const [phone, setPhone] = useState("");
     const [occupation, setOccupation] = useState("");
+    const [nickname, setNickname] = useState("");
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -24,8 +25,9 @@ const Profile = () => {
         {
             navigate("/");
         }
-        axios.get(`http://localhost:8080/users/`+window.sessionStorage.getItem("user_id"))
+        axios.get(`http://localhost:8080/users/` + window.sessionStorage.getItem("user_id"))
         .then(res => {
+            setNickname(res.data.nickname);
             setUsername(res.data.nickname);
             setEmail(res.data.email);
             setFname(res.data.family_name);
@@ -41,20 +43,20 @@ const Profile = () => {
         <div>
             <nav className="navigation">
             <div className="row">
-                <div className="col-md-3">
+                <div className="col-md-6">
                     <div className="scrollmenu">
-                        <a href="http://localhost:3000/">More Powerful Together</a>
+                        <a href="http://localhost:3000/event">More Powerful Together</a>
                         <a href="http://localhost:3000/event">Events</a>
                         <a href="http://localhost:3000/topvolunteers">Top Volunteers</a>
                     </div>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-2">
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-1">
                 </div>
                 <div className="col-md-3">
                     <div className="dropdown dd-event">
-                        <button className="dropbtn">Fname Lname</button>
+                        <button className="dropbtn">{nickname}</button>
                         <div className="dropdown-content">
                         <a href="http://localhost:3000/profile">My Profile</a>
                         <a href="http://localhost:3000/">Logout</a>
@@ -72,9 +74,10 @@ const Profile = () => {
             <div className="row profil-div">
                 <div className="col-md-2"></div>
                 <div className="col-md-2">
-                    <img src="../img/profile.png" className="profil-photo"/>
+                <img src={profile} className="profil-photo"/>
                 </div>
-                <div className="col-md-8">
+                <div className="col-md-2"></div>
+                <div className="col-md-6">
                     <p>Username: {username}</p>
                     <p>Email: {email}</p>
                     <p>First Name: {fname}</p>

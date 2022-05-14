@@ -51,17 +51,17 @@ const Register = () => {
         <div>
             <nav className="navigation">
                 <div className="row">
-                    <div className="col-md-3">
+                    <div className="col-md-6">
                         <div className="scrollmenu">
                             <a href="#home">More Powerful Together</a>
                         </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
+                    </div>
+                    <div className="col-md-1">
                     </div>
                     <div className="col-md-3">
-                    </div>
-                    <div className="col-md-3">
-                        <p>Login</p>
+                        <a href="http://localhost:3000/"><p>Login</p></a>
                     </div>
                 </div>
             </nav>

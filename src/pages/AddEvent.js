@@ -17,6 +17,7 @@ const AddEvent = () => {
     const [image, setImage] = useState("");
     const [description, setDescription] = useState("");
     const [volunteers, setVolunteers] = useState("");
+    const [nickname, setNickname] = useState("");
 
     let fileReader;
 
@@ -64,6 +65,10 @@ const AddEvent = () => {
         {
             navigate("/");
         }
+        axios.get(`http://localhost:8080/users/` + window.sessionStorage.getItem("user_id"))
+        .then(res => {
+            setNickname(res.data.nickname);
+        });
     }, []);
 
 
@@ -71,20 +76,20 @@ const AddEvent = () => {
         <div>
             <nav class="navigation">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <div class="scrollmenu">
-                        <a href="http://localhost:3000/">More Powerful Together</a>
+                        <a href="http://localhost:3000/event">More Powerful Together</a>
                         <a href="http://localhost:3000/event">Events</a>
                         <a href="http://localhost:3000/topvolunteers">Top Volunteers</a>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-1">
                     </div>
                     <div class="col-md-3">
                         <div class="dropdown" style="margin-left:240px">
-                            <button class="dropbtn">Fname Lname</button>
+                            <button className="dropbtn">{nickname}</button>
                             <div class="dropdown-content">
                             <a href="http://localhost:3000/profile">My Profile</a>
                             <a href="http://localhost:3000/">Logout</a>

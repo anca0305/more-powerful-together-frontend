@@ -22,8 +22,13 @@ const EventPage = () => {
     const [join, setJoin] = useState(false);
     const [joinId, setJoinId] = useState("0");
     const [searchParams] = useSearchParams();
+    const [nickname, setNickname] = useState("");
 
     useEffect(() => {
+        axios.get(`http://localhost:8080/users/` + window.sessionStorage.getItem("user_id"))
+        .then(res => {
+            setNickname(res.data.nickname);
+        });
         axios.get(`http://localhost:8080/events/`+searchParams.get('Id'))
         .then(res => {
             setType(res.data.type);
@@ -115,20 +120,20 @@ const EventPage = () => {
         <div>
             <nav className="navigation">
                 <div className="row">
-                    <div className="col-md-3">
+                    <div className="col-md-6">
                         <div className="scrollmenu">
-                            <a href="http://localhost:3000/">More Powerful Together</a>
+                            <a href="http://localhost:3000/event">More Powerful Together</a>
                             <a href="http://localhost:3000/event">Events</a>
                             <a href="http://localhost:3000/topvolunteers">Top Volunteers</a>
                         </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-2">
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-1">
                     </div>
                     <div className="col-md-3">
                         <div className="dropdown dd-event">
-                            <button className="dropbtn">Fname Lname</button>
+                            <button className="dropbtn">{nickname}</button>
                             <div className="dropdown-content">
                             <a href="http://localhost:3000/profile">My Profile</a>
                             <a href="http://localhost:3000/">Logout</a>
