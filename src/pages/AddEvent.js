@@ -88,7 +88,7 @@ const AddEvent = () => {
                     <div class="col-md-1">
                     </div>
                     <div class="col-md-3">
-                        <div class="dropdown" style="margin-left:240px">
+                        <div class="dropdown dd-event">
                             <button className="dropbtn">{nickname}</button>
                             <div class="dropdown-content">
                             <a href="http://localhost:3000/profile">My Profile</a>

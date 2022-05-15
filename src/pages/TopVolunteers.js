@@ -12,6 +12,12 @@ const TopVolunteers = () => {
 
     const navigate = useNavigate();
     const [nickname, setNickname] = useState("");
+    const [top1name, setTop1name] = useState("Undefinded");
+    const [top2name, setTop2name] = useState("Undefinded");
+    const [top3name, setTop3name] = useState("Undefinded");
+    const [top1points, setTop1points] = useState("Undefinded");
+    const [top2points, setTop2points] = useState("Undefinded");
+    const [top3points, setTop3points] = useState("Undefinded");
 
     useEffect(() => {
         if(window.sessionStorage.getItem("user_id") === null)
@@ -24,13 +30,31 @@ const TopVolunteers = () => {
             setNickname(res.data.nickname);
         });
 
-        axios.get(`http://localhost:8080/eventsenrollment/`)
+        axios.get(`http://localhost:8080/topvolunteer`)
         .then(res => {
-            
-            for(let i = 0 ; i < res.data.length ; i++)
-            {
-                
-            }
+
+            let uid = 0;
+
+            uid = res.data[0].split(" = ")[0];
+            axios.get(`http://localhost:8080/users/` + uid)
+            .then(res => {
+                setTop1name(res.data.nickname)
+            });
+            setTop1points(res.data[0].split(" = ")[1])
+
+            // uid = res.data[1].split(" = ")[0];
+            // axios.get(`http://localhost:8080/users/` + uid)
+            // .then(res => {
+            //     setTop2name(res.data.nickname)
+            // });
+            // setTop2points(res.data[1].split(" = ")[1])
+
+            // uid = res.data[2].split(" = ")[0];
+            // axios.get(`http://localhost:8080/users/` + uid)
+            // .then(res => {
+            //     setTop3name(res.data.nickname)
+            // });
+            // setTop3points(res.data[2].split(" = ")[1])
 
         });
 
@@ -42,9 +66,9 @@ const TopVolunteers = () => {
                 <div className="row">
                     <div className="col-md-6">
                         <div className="scrollmenu">
-                            <a href="#home">More Powerful Together</a>
-                            <a href="#home">Events</a>
-                            <a href="#news">Top Volunteers</a>
+                            <a href="http://localhost:3000/event">More Powerful Together</a>
+                            <a href="http://localhost:3000/event">Events</a>
+                            <a href="http://localhost:3000/topvolunteers">Top Volunteers</a>
                         </div>
                     </div>
                     <div className="col-md-2">
@@ -55,9 +79,8 @@ const TopVolunteers = () => {
                         <div className="dropdown dd-event">
                             <button className="dropbtn">{nickname}</button>
                             <div className="dropdown-content">
-                            <a href="#">My Profile</a>
-                            <a href="#">My Events</a>
-                            <a href="#">Logout</a>
+                                <a href="http://localhost:3000/profile">My Profile</a>
+                                <a href="http://localhost:3000/">Logout</a>
                             </div>
                         </div>
                     </div>
@@ -72,17 +95,17 @@ const TopVolunteers = () => {
                     </div>
                     <div className="row">
                         <div className="col-md 12">
-                            <p>Username Points</p>
+                            <p>{top1name} {top1points}</p>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md 12">
-                            <p>Username Points</p>
+                            <p>{top2name} {top2points}</p>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md 12">
-                            <p>Username Points</p>
+                            <p>{top3name} {top3points}</p>
                         </div>
                     </div>
                 </div>

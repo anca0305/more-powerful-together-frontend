@@ -15,6 +15,7 @@ const EventPage = () => {
     const [type, setType] = useState("");
     const [organisation, setOrganisation] = useState("");
     const [volunteers, setVolunteers] = useState("");
+    const [name, setName] = useState("");
     const [start, setStart] = useState("");
     const [end, setEnd] = useState("");
     const [description, setDescription] = useState("");
@@ -31,6 +32,7 @@ const EventPage = () => {
         });
         axios.get(`http://localhost:8080/events/`+searchParams.get('Id'))
         .then(res => {
+            setName(res.data.name);
             setType(res.data.type);
             setOrganisation(res.data.organization);
             setStart(res.data.startdate);
@@ -143,9 +145,9 @@ const EventPage = () => {
                 </div>
             </nav>
             <section className="profile">
-                <div className="row center">
+                <div className="row center event-page-top">
                     <div className="col-md-12">
-                        <h2> Event Name </h2>
+                        <h2> Event : {name} </h2>
                     </div>
                 </div>
                 <div className="container">
