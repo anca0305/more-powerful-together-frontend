@@ -20,6 +20,7 @@ const EventPage = () => {
     const [end, setEnd] = useState("");
     const [description, setDescription] = useState("");
     const [contact, setContact] = useState("");
+    const [owner, setOwner] = useState("");
     const [img, setImg] = useState("");
     const [join, setJoin] = useState(false);
     const [joinId, setJoinId] = useState("0");
@@ -31,6 +32,7 @@ const EventPage = () => {
     useEffect(() => {
         axios.get(`http://localhost:8080/users/` + window.sessionStorage.getItem("user_id"))
         .then(res => {
+            console.log(res.data);
             setNickname(res.data.nickname);
         });
         axios.get(`http://localhost:8080/events/`+searchParams.get('Id'))
@@ -43,6 +45,18 @@ const EventPage = () => {
             setEnd(res.data.enddate);
             setDescription(res.data.description);
             setContact(res.data.contact);
+
+            let owner = res.data.owner;
+
+            axios.get(`http://localhost:8080/users/` + owner)
+                .then(res => {
+                console.log(res.data);
+                setOwner(res.data.nickname);
+                if(res.data.user_metadata.admin == "true" && owner == window.sessionStorage.getItem("user_id"))
+                {
+                    setAdmin("true");
+                }
+            });
         });
 
         axios.get(`http://localhost:8080/eventsenrollment/`)
@@ -65,15 +79,7 @@ const EventPage = () => {
                 setVolunteers(0);
             }
         });
-        
-        axios.get(`http://localhost:8080/users/`+window.sessionStorage.getItem("user_id"))
-        .then(res => {
-            if(res.data.user_metadata.admin === "true")
-            {
-                setAdmin("true");
-            }
-        });
-        
+
         axios.get(`http://localhost:8080/eventsenrollment/`)
         .then(res => {
             
@@ -167,6 +173,7 @@ const EventPage = () => {
                             <p>End Date: {end}</p>
                             <p>Description: {description}</p>
                             <p>Contact Info: {contact}</p>
+                            <p>Owner: {owner}</p>
                         </div>
                     </div>
                 </div>

@@ -189,7 +189,7 @@ const EditEvent = () => {
                             </div>
                         </div>
                         <div className="col-md-4">
-                            <img src="../img/dummy-event.jpg" alt="" className="event-photo"/>
+                            <img src={img} alt="" className="event-photo"/>
                         </div>
                     </div>
                 </div>
