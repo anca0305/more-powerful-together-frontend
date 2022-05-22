@@ -15,11 +15,20 @@ const Event = () => {
     const [enddate, setEnddate] = useState("");
     const [type, setType] = useState("");
     const [nickname, setNickname] = useState("");
+    const [admin, setAdmin] = useState("");
 
     const [events, setEvents] = useState([]);
     const navigate = useNavigate();
 
     const evnts = [];
+
+    axios.get(`http://localhost:8080/users/`+window.sessionStorage.getItem("user_id"))
+    .then(res => {
+        if(res.data.user_metadata.admin === "true")
+        {
+            setAdmin("true");
+        }
+    });
 
     useEffect(() => {
         if(window.sessionStorage.getItem("user_id") === null)
@@ -39,6 +48,7 @@ const Event = () => {
             for(let i = 0; i < event.length; i++)
             {
                 evnts.push(<Evnt
+                    id={event[i].id}
                     img={event[i].image}
                     name={event[i].name}
                     startdate={event[i].startdate}
@@ -51,22 +61,23 @@ const Event = () => {
         });
     }, []);
 
-    const submitFilter = (event) => {
+    const submitFilter = async (event) => {
         event.preventDefault();
         let e = events;
+        let evs = []
         if(type !== "")
         {
             for(let i = 0; i<e.length; i++)
             {
-                if(e[i].props.type !== type)
+                
+                if(e[i].props.type === type)
                 {
-                    e = e.splice(i, 1);
+                    evs.push(e[i])
                 }
             }
         }
         console.log(e);
-        setEvents(e);
-        
+        setEvents(evs);
     }
 
     return (
@@ -78,6 +89,9 @@ const Event = () => {
                             <a href="http://localhost:3000/event">More Powerful Together</a>
                             <a href="http://localhost:3000/event">Events</a>
                             <a href="http://localhost:3000/topvolunteers">Top Volunteers</a>
+                            {admin == "true" &&
+                                <a href="http://localhost:3000/AddEvent">Add Events</a>
+                            }
                         </div>
                     </div>
                     <div className="col-md-2">
@@ -98,13 +112,14 @@ const Event = () => {
             <section>
                 <div className="row">
                     <div className="col-md-2 center filter-section">
-                        <form onSubmit={submitFilter}>
+                        <form>
                             <p>Start Date</p>
                             <input type="date" value={startdate} onChange={(e) => setStartdate(e.target.value)}/>
                             <p>End Date</p>
                             <input type="date" value={enddate} onChange={(e) => setEnddate(e.target.value)}/>
                             <p>Event Type</p>
                             <select value={type} onChange={(e) => setType(e.target.value)}>
+                                <option value="Types">Select Type</option>
                                 <option value="Charity">Charity</option>
                                 <option value="Medical">Medical</option>
                                 <option value="Refugees">Refugees</option>
@@ -112,7 +127,6 @@ const Event = () => {
                                 <option value="Animals">Animals</option>
                             </select>
                             <br/>
-                            <button className="profil-button">Filter</button>
                         </form>
                     </div>
                     <div className="col-md-10">
@@ -122,8 +136,32 @@ const Event = () => {
                             </div>
                         </div>
                         <div className="container event-text">
-                            
-                            {events}
+                        <div className="row">
+                            </div>
+                            {(() => {
+                                const options = [];
+                                let e = events
+                                let evs = []
+                                if(type !== "")
+                                {
+                                    for(let i = 0; i<e.length; i++)
+                                    {
+                                        
+                                        if(e[i].props.type === type)
+                                        {
+                                            evs.push(e[i])
+                                        }
+                                    }
+                                }
+                                if(type === "" && startdate === "" && enddate === "")
+                                {
+                                    for(let i = 0; i<e.length; i++)
+                                    {
+                                        evs.push(e[i])
+                                    }
+                                }
+                                return evs;
+                            })()}
                         </div>
                     </div>
                 </div>
@@ -132,12 +170,13 @@ const Event = () => {
     );
 }
 
-const Evnt = ({ img, name, type, startdate, enddate, description}) => {
+const Evnt = ({ id, img, name, type, startdate, enddate, description}) => {
     //console.log(props)
     //const { img, title, author } = props
+    let link = "http://localhost:3000/EventPage?Id=" + id
     return (
         <div>
-            <a href="http://localhost:3000/EventPage?Id=1">
+            <a href={link}>
                 <div className="row space-row">
                     <div className="col-md-4">
                         <img src={img} alt="" className="event-photo"/>

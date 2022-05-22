@@ -12,13 +12,15 @@ import {
     Profile,
     Register,
     TopVolunteers,
+    Main
 } from './pages';
 
 function App() {
     return (
     <Router>
         <Routes>
-            <Route path='/' element={<Login />} />
+            <Route path='/' element={<Main />} />
+            <Route path='Login' element={<Login />} />
             <Route path='register' element={<Register />} />
             <Route path='changepassword' element={<ChangePassword />} />
             <Route path='editevent' element={<EditEvent />} />

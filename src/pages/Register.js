@@ -20,6 +20,7 @@ const Register = () => {
     const [phone, setPhone] = useState("");
     const [confpass, setConfpass] = useState("");
     const [occupation, setOccupation] = useState("");
+    const [role, setRole] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
@@ -36,6 +37,7 @@ const Register = () => {
                 country : country,
                 city : city,
                 occupation : occupation,
+                role: role,
             };
 
             axios.post(`http://localhost:8080/createUser`, user)
@@ -122,6 +124,15 @@ const Register = () => {
                             <div className="col-md-6">
                                 <p>Occupation</p>
                                 <input type="text" value={occupation} onChange={(e) => setOccupation(e.target.value)}/>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-12">
+                                <p>Role</p>
+                                <select value={role} onChange={(e) => setRole(e.target.value)}>
+                                <option value="Volunteer">Volunteer</option>
+                                <option value="Organiser">Organiser</option>
+                            </select>
                             </div>
                         </div>
                         <div className="row">

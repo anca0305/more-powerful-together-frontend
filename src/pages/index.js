@@ -8,6 +8,7 @@ import Login from './Login'
 import Profile from './Profile'
 import Register from './Register'
 import TopVolunteers from './TopVolunteers'
+import Main from './Main'
 
 export {
     AddEvent,
@@ -20,4 +21,5 @@ export {
     Profile,
     Register,
     TopVolunteers,
+    Main
 }

@@ -50,6 +50,7 @@ const AddEvent = () => {
             image: image,
             description: description,
             volunteers: volunteers,
+            owner: window.sessionStorage.getItem("user_id")
         };
 
         axios.post(`http://localhost:8080/event/add`, e)

@@ -20,10 +20,13 @@ const EventPage = () => {
     const [end, setEnd] = useState("");
     const [description, setDescription] = useState("");
     const [contact, setContact] = useState("");
+    const [img, setImg] = useState("");
     const [join, setJoin] = useState(false);
     const [joinId, setJoinId] = useState("0");
     const [searchParams] = useSearchParams();
     const [nickname, setNickname] = useState("");
+
+    let edit = "http://localhost:3000/editevent?Id="+searchParams.get('Id')
 
     useEffect(() => {
         axios.get(`http://localhost:8080/users/` + window.sessionStorage.getItem("user_id"))
@@ -32,6 +35,7 @@ const EventPage = () => {
         });
         axios.get(`http://localhost:8080/events/`+searchParams.get('Id'))
         .then(res => {
+            setImg(res.data.image);
             setName(res.data.name);
             setType(res.data.type);
             setOrganisation(res.data.organization);
@@ -153,7 +157,7 @@ const EventPage = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-4">
-                            <img src={dummy} alt="" className="event-photo"/>
+                            <img src={img} alt="" className="event-photo"/>
                         </div>
                         <div className="col-md-8">
                             <p>Type: {type}</p>
@@ -171,7 +175,7 @@ const EventPage = () => {
                     <div className="col-md-2"></div>
                     <div className="col-md-2"></div>
                     {admin == "true" &&
-                        <div className="col-md-2"><a href="http://localhost:3000/editevent"><button className="profil-button">Edit</button></a></div>
+                        <div className="col-md-2"><a href={edit}><button className="profil-button">Edit</button></a></div>
                     }
                     {join === true &&
                         <div className="col-md-2"><button className="profil-button" onClick={joinEvent}>Unjoin Event</button></div>
